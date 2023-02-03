@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Numeros Primos App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.css') }}">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"
+        integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+</head>
+
+<div class="text-center card card-footer p-3 text-muted">
+    <nav class="navbar navbar-expand-sm">
+        <div class="container">
+            <a class="navbar-brand text-dark"><i class="fa fa-list-ol" aria-hidden="true"></i> Numeros Primos App</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse"
+                aria-controls="navbarSupportedContent" aria-expanded="true" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                <ul class="navbar-nav flex-grow-1">
+                    <li class="nav-item">
+                        <a class="nav-link text-muted" target="_blank"
+                            href="https://gitlab.com/jmarascutti/numerosprimos"><i class="fa fa-database"
+                                aria-hidden="true"></i> Repositorio</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</div>
+
+<body>
+    <div class="container mt-5">
+        <div class="shadow-lg p-5 mb-5 bg-light rounded">
+            <div>
+                <div class="display-6 p-1 text-center text-dark"><iconify-icon
+                        icon="material-symbols:check-circle-rounded" style="color: #0f5132;"></iconify-icon> Verificador
+                    de números primos</div>
+                <div class="alert alert-success mt-4 text-center" role="alert">
+                    <i class="fa fa-check-circle" aria-hidden="true"></i> Para determinar si un número es primo o no,
+                    ingrese un número a continuación.
+                </div>
+
+                <form action="/" method="post">
+                    <label class="form-label text-left">Número:</label>
+                    <input class="form-control" type="text" name="numero" id="numero" placeholder="Ejemplo: 5" />
+                    <div class="mb-3 mt-4 text-center">
+                        <button type="submit" class="btn btn-success"><i class="fa fa-search" aria-hidden="true"></i>
+                            Verificar</button>
+                        <button type="reset"   class="btn btn-primary"><i class="fa fa-history" aria-hidden="true"></i>
+                            Limpiar</button>
+                    </div>
+                </form>
+                {% if reiniciarVerificador == False %}
+                    {% if msj %}                
+                        <div class="alert alert-danger text-center mt-5" role="alert">
+                            <div><i class="fa fa-1x fa-exclamation-triangle"></i>
+                            {{ msj }}
+                            </div>
+                        </div>                            
+                    {% elif esPrimo %}
+                            <div class="alert alert-primary text-center mt-5" role="alert">
+                                <div><i class="fa fa-1x fa-exclamation-triangle"></i> El número {{ numero }} <strong>es
+                                        primo.</strong></div>
+                            </div>
+                            <div class="alert alert-warning text-center mt-1" role="alert">
+                                <div><i class="fa fa-1x fa-info-circle"></i> La verificación se ejecutó en:
+                                    <strong>{{ tiempoEjecucion }} segundos</strong>
+                                </div>
+                            </div> 
+                    {% else %}
+                            <div class="alert alert-primary text-center mt-5" role="alert">
+                                <div><i class="fa fa-1x fa-exclamation-triangle"></i>
+                                    El número {{ numero }} <strong>no es primo.</strong> Sus divisores son:
+                                    {% for divisor in divisores %}                                                               
+                                        <strong>{{ divisor }},</strong>                                                      
+                                    {% endfor %}
+                                    <strong> 1 y {{ numero }}.</strong>       
+                                </div>
+                            </div>
+                            <div class="alert alert-warning text-center mt-1" role="alert">
+                                <div><i class="fa fa-1x fa-info-circle"></i> La verificación se ejecutó en:
+                                    <strong>{{ tiempoEjecucion }} segundos</strong>
+                                </div>
+                            </div>    
+                     {% endif %}                                 
+                {% endif %}                      
+            </div>
+        </div>
+    </div>
+
+    <footer class="">
+        <div class="container">
+            <div class="c-footer fixed-bottom d-print-none text-center card card-footer p-3 text-muted">
+                <div>
+                    &copy; 2023 | Números Primos App | Versión: 1.0
+                </div>
+                <div class="ml-auto"></div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
